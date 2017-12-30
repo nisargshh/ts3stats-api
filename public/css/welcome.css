@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+.overimage{
+  position: absolute;
+  top: 30vh;
+  left: 10vw;
+  height: 40vh;
+  width: 80vw;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 50px;
+  color: white;
+}
+
+.serverform{
+  position: relative;
+  width: 100vw;
+  z-index: 10;
+  top: 5vh;
+}
+
+input[name="ips"]{
+  height: 7vh;
+  width: 80vw;
+  border-radius: 50px;
+  font-size: 20px;
+}
+
+input[name="submit-button"]{
+  position: relative;
+  height: 10vh;
+  width: 5vw;
+  margin-top: 4vh;
+}

@@ -18,3 +18,5 @@ Route::get('/', function () {
 Route::post('/', 'TeamspeakController@createOrUpdateIP');
 
 Route::get('/test', 'TeamspeakController@updateUsers');
+
+Route::get('/{server}', 'TeamspeakController@serverData');
