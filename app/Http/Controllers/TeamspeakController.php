@@ -15,11 +15,20 @@ class TeamspeakController extends Controller
   * @return void
   */
   public function createOrUpdateIP(Request $request) {
+    $url = "http://api.planetteamspeak.com/serverhistory/" . $request->input('ips') . "/?duration=1";  //API
+    $content = file_get_contents($url);
+    $result = json_decode($content, true);
+
+    if($result['status'] == "error"){
+      return $result['status'];
+    }
+
     $server = TeamspeakIPS::firstOrCreate(['ips' => $request->input('ips')]);
     $server->save();
 
-    return 'localhost:8000/' . $request->input('ips');
+    return redirect('/' . $request->input('ips'));
   }
+
   /**
   * Queues a job to update all server in the database
 
@@ -47,6 +56,12 @@ class TeamspeakController extends Controller
   * @return view
   */
   public function serverData($server){
+    if(DB::table('teamspeakips')->where('ips', $server)->count() == 0){
+      return 'Sorry Server Not On Recording List';
+    }
+
+    $this->updateSingleServer($server);
+
     $ip = DB::table('stats')->where('ip', $server)->select('ip')->orderBy('id', 'asc')->first();  //Gets IP For Server
     $dates = DB::table('stats')->where('ip', $server)->select('date')->groupBy('date')->get();  //Gets All The Dates For That IP
     $start = DB::table('teamspeakips')->where('ips', $server)->select('created_at')->first();   //Get Date That Server Start Recording

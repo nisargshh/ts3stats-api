@@ -19,4 +19,10 @@ Route::post('/', 'TeamspeakController@createOrUpdateIP');
 
 Route::get('/test', 'TeamspeakController@updateUsers');
 
+Route::get('/gg', 'TeamspeakController@createOrUpdateIP');
+
 Route::get('/{server}', 'TeamspeakController@serverData');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

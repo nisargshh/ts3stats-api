@@ -32,3 +32,11 @@ input[name="submit-button"]{
   width: 5vw;
   margin-top: 4vh;
 }
+
+.donate{
+  font-size: 35px;
+}
+
+input[alt="PayPal"]{
+  cursor: pointer;
+}

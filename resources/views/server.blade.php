@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>{{$ip->ip}}</title>
   <meta charset="UTF-8">
   <meta name="description" content="Statistics for your teamspeak 3 server.">
   <meta name="keywords" content="Teamspeak, Stats, Statistics, TS3, Server, Client, Graph">
@@ -13,15 +13,25 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111767445-1"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-111767445-1');
+</script>
 
 
-  <script type="text/javascript" charset="utf-8">
-    var dates = <?php echo $dates; ?>;
-    var avg = <?php echo $avg ?>;
-    var clients = <?php echo $clients ?>;
-    var time = <?php echo $time ?>;
-    console.log(dates);
-  </script>
+
+<script type="text/javascript" charset="utf-8">
+var dates = <?php echo $dates; ?>;
+var avg = <?php echo $avg ?>;
+var clients = <?php echo $clients ?>;
+var time = <?php echo $time ?>;
+console.log(dates);
+</script>
 
 </head>
 <body>
@@ -30,6 +40,8 @@
   <canvas id="avgusers" width="100vw" height="20vh"></canvas>
   <canvas id="userstoday" width="100vw" height="20vh"></canvas>
 
-<script src="{{ URL::asset('js/server.js') }}" charset="utf-8"></script>
+  Want to an API Key email me at nisarg@ts3stats.tk
+
+  <script src="{{ URL::asset('js/server.js') }}" charset="utf-8"></script>
 </body>
 </html>
