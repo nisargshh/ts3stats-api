@@ -19,6 +19,6 @@ class TeamspeakIPS extends Model
      * @var array
      */
     protected $fillable = [
-        'ips',
+        'ips', 'created_at', 'updated_at',
     ];
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,19 +15,15 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-Route::middleware('api')->get('/user', function (Request $request) {
-  echo "test";
-});
-
 Route::middleware('api')->get('/{server}', function (Request $request, $server) {
   if(DB::table('stats')->where('ip', $server)->count() != 0){
     $stats = DB::table('stats')->where('ip', $server)->select('ip', 'date', 'time', 'clients')->get();
-    return $stats;
+    return response()->json([$stats]);
   }
-  return response()->json(['error' => 'Server Does Not Exist In Our Recordings']);
+  return response()->json(['error' => 'No data on of the server yet, wait atleast 1 hour.']);
 });
 
-Route::middleware('api')->get('/{server}/avg/today', function (Request $request, $token, $server) {
+Route::middleware('api')->get('/{server}/avg/today', function (Request $request, $server) {
   if(DB::table('stats')->where('ip', $server)->count() != 0){
     $today = getdate(); //Todays Dates
     $today['mday'] = $today['mday'] - 1;
@@ -47,8 +44,14 @@ Route::middleware('api')->get('/{server}/avg/today', function (Request $request,
 */
 Route::post('/addserver', function(Request $request){
   $server = $request->input('server');
-  if(DB::table('teamspeakips')->insert(['ips' => $server])){
-    return 'Server submitted';
+
+  if(DB::table('teamspeakips')->where('ips', $server)->count() > 0){
+    DB::table('teamspeakips')->where('ips', $server)->update(['updated_at' => Carbon::now()]);
+    return response()->json(['success' => 'Server already in database']);
   }
-  return 'Error: Server not submitted';
+
+  if(DB::table('teamspeakips')->insert(['ips' => $server, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()])){
+    return response()->json(['success' => 'Server submitted']);
+  }
+  return response()->json(['error' => 'Server not submitted']);
 });

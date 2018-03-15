@@ -15,4 +15,11 @@ Route::get('/', function () {
   return view('welcome');
 });
 
+Route::post('/', 'TeamspeakController@createOrUpdateIP');
+
 Route::get('/update', 'TeamspeakController@updateUsers');
+
+
+Route::get('/gg', 'TeamspeakController@createOrUpdateIP');
+
+Route::get('/{server}', 'TeamspeakController@serverData');
